@@ -16,6 +16,9 @@ public interface RegisterableRepository<T extends Registerable> extends JpaRepos
     @Query("SELECT r FROM registerables r WHERE r.email = :email AND TYPE(r) = :type")
     Optional<T> findByEmailAndType(String email, Class<? extends T> type);
 
+    @Query("SELECT COUNT(r) > 0 FROM registerables r WHERE r.email = :email AND TYPE(r) = :type")
+    boolean existsByEmailAndType(String email, Class<? extends T> type);
+
 }
 
 

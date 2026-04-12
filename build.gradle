@@ -50,17 +50,11 @@ dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.36'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
 
-    // Use AWS S3 for managing Digital Ocean Spaces
-    implementation 'com.amazonaws:aws-java-sdk-s3:1.12.9'
-
     // Use JavaxMail for sending emails
     implementation 'com.sun.mail:javax.mail:1.6.2'
 
-    // Use Reflections for classpath scanning
-    implementation 'org.reflections:reflections:0.10.2'
-
-    // PDFBox
-    implementation 'org.apache.pdfbox:pdfbox:2.0.28'
+    // Use Google API
+    implementation 'com.google.api-client:google-api-client:2.9.0'
 }
 
 java {

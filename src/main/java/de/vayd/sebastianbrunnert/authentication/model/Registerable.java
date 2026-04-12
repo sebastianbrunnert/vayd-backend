@@ -1,6 +1,9 @@
 package de.vayd.sebastianbrunnert.authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import de.vayd.sebastianbrunnert.authentication.controller.GoogleController;
+import de.vayd.sebastianbrunnert.authentication.controller.LoginController;
+import de.vayd.sebastianbrunnert.authentication.controller.RegisterController;
 import de.vayd.sebastianbrunnert.authentication.controller.WhoAmIController;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -29,7 +32,7 @@ public abstract class Registerable {
     @JsonView({WhoAmIController.class})
     private String email;
 
-    @JsonView(WhoAmIController.class)
+    @JsonView({WhoAmIController.class, RegisterController.class, LoginController.class, GoogleController.class})
     private String name;
 }
 

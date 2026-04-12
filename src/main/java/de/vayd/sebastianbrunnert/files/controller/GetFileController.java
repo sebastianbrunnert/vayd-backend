@@ -1,12 +1,12 @@
 package de.vayd.sebastianbrunnert.files.controller;
 
-import com.amazonaws.util.IOUtils;
 import de.vayd.sebastianbrunnert.authentication.model.intern.CustomFileAuthentication;
 import de.vayd.sebastianbrunnert.files.exceptions.FileException;
 import de.vayd.sebastianbrunnert.files.model.CustomFile;
 import de.vayd.sebastianbrunnert.files.repository.CustomFileRepository;
 import de.vayd.sebastianbrunnert.files.services.StorageService;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;

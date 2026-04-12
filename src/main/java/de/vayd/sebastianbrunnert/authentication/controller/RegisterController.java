@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 import de.vayd.sebastianbrunnert.api.exceptions.ApiError;
 import de.vayd.sebastianbrunnert.authentication.model.Registerable;
 import de.vayd.sebastianbrunnert.authentication.model.Role;
+import de.vayd.sebastianbrunnert.authentication.model.User;
 import de.vayd.sebastianbrunnert.authentication.model.intern.AuthenticationContext;
 import de.vayd.sebastianbrunnert.authentication.repository.RegisterableRepository;
 import de.vayd.sebastianbrunnert.authentication.repository.UserRepository;
@@ -16,26 +17,31 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("login")
-public class LoginController {
+@RequestMapping("register")
+public class RegisterController {
 
     @Autowired
     private UserRepository userRepository;
 
     @PostMapping
-    @JsonView(LoginController.class)
-    public ResponseEntity login(
+    @JsonView(RegisterController.class)
+    public ResponseEntity register(
+            @RequestParam("name") String name,
             @RequestParam("email") String email,
             @RequestParam("hash") String hash
     ) throws ApiError {
-        ApiError error = new ApiError().setMessage("Wrong login data.").setDetails("email").setLevel(ApiError.Level.INQUIRER);
-        Registerable registerable = this.userRepository.findByEmail(email).orElseThrow(() -> error);
-
-        if(!registerable.getHash().equals(new HashingGenerator(hash, registerable.getSalt()).generate())) {
-            throw error;
+        if(this.userRepository.existsByEmail(email)) {
+            throw new ApiError().setMessage("There is already a user with this email address.").setDetails("email").setLevel(ApiError.Level.INQUIRER);
+        }
+        if(!email.matches("^[A-Za-z0-9+_.-]+@(.+)$")) {
+            throw new ApiError().setMessage("The email address is not valid.").setDetails("email").setLevel(ApiError.Level.INQUIRER);
         }
 
-        return ResponseEntity.ok(new AuthenticationContext().setRegisterable(registerable));
+        HashingGenerator hashingGenerator = new HashingGenerator(hash);
+        User user = (User) new User().setEmail(email).setName(name).setHash(hashingGenerator.generate()).setSalt(hashingGenerator.getSalt());
+        this.userRepository.save(user);
+
+        return ResponseEntity.ok(new AuthenticationContext().setRegisterable(user));
     }
 
 }
