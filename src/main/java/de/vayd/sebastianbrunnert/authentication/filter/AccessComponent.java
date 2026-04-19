@@ -95,6 +95,15 @@ public class AccessComponent {
         return (User) ((CustomAuthentication) SecurityContextHolder.getContext().getAuthentication()).getRegisterable();
     }
 
+    public boolean isUser() {
+        return this.is(Role.USER);
+    }
+
+    public boolean isAdmin() {
+        User user = this.getUser();
+        return user != null && user.isAdmin();
+    }
+
     public boolean isFile() {
         return SecurityContextHolder.getContext().getAuthentication() != null && SecurityContextHolder.getContext().getAuthentication() instanceof CustomFileAuthentication;
     }

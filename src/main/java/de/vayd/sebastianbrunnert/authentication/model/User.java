@@ -1,6 +1,7 @@
 package de.vayd.sebastianbrunnert.authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import de.vayd.sebastianbrunnert.authentication.controller.GoogleController;
 import de.vayd.sebastianbrunnert.authentication.controller.LoginController;
 import de.vayd.sebastianbrunnert.authentication.controller.RegisterController;
 import de.vayd.sebastianbrunnert.authentication.controller.WhoAmIController;
@@ -13,7 +14,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class User extends Registerable {
 
-    @JsonView({WhoAmIController.class, LoginController.class, RegisterController.class})
+    @JsonView({WhoAmIController.class, LoginController.class, RegisterController.class, GoogleController.class})
     private boolean admin = false;
 
     private boolean google = false;
