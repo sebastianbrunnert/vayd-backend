@@ -1,10 +1,9 @@
 package de.vayd.sebastianbrunnert.authentication.model;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import de.vayd.sebastianbrunnert.authentication.controller.GoogleController;
-import de.vayd.sebastianbrunnert.authentication.controller.LoginController;
-import de.vayd.sebastianbrunnert.authentication.controller.RegisterController;
-import de.vayd.sebastianbrunnert.authentication.controller.WhoAmIController;
+import de.vayd.sebastianbrunnert.authentication.controller.*;
+import de.vayd.sebastianbrunnert.profile.controller.EditProfileController;
+import de.vayd.sebastianbrunnert.profile.controller.ProfileController;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -32,7 +31,7 @@ public abstract class Registerable {
     @JsonView({WhoAmIController.class})
     private String email;
 
-    @JsonView({WhoAmIController.class, RegisterController.class, LoginController.class, GoogleController.class})
+    @JsonView({WhoAmIController.class, RegisterController.class, LoginController.class, GoogleController.class, ProfileController.class, EditProfileController.class})
     private String name;
 }
 
